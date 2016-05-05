@@ -77,18 +77,18 @@ var (
 		REGEXP_NOT_I_LIKE_OP: []byte("!~*"),
 	}
 	default_join_lookup = map[JoinType][]byte{
-		INNER_JOIN:         []byte(" INNER JOIN "),
-		FULL_OUTER_JOIN:    []byte(" FULL OUTER JOIN "),
-		RIGHT_OUTER_JOIN:   []byte(" RIGHT OUTER JOIN "),
-		LEFT_OUTER_JOIN:    []byte(" LEFT OUTER JOIN "),
-		FULL_JOIN:          []byte(" FULL JOIN "),
-		RIGHT_JOIN:         []byte(" RIGHT JOIN "),
-		LEFT_JOIN:          []byte(" LEFT JOIN "),
-		NATURAL_JOIN:       []byte(" NATURAL JOIN "),
-		NATURAL_LEFT_JOIN:  []byte(" NATURAL LEFT JOIN "),
-		NATURAL_RIGHT_JOIN: []byte(" NATURAL RIGHT JOIN "),
-		NATURAL_FULL_JOIN:  []byte(" NATURAL FULL JOIN "),
-		CROSS_JOIN:         []byte(" CROSS JOIN "),
+		INNER_JOIN:         []byte(" INNER JOIN EACH "),
+		FULL_OUTER_JOIN:    []byte(" FULL OUTER JOIN EACH "),
+		RIGHT_OUTER_JOIN:   []byte(" RIGHT OUTER JOIN EACH "),
+		LEFT_OUTER_JOIN:    []byte(" LEFT OUTER JOIN EACH "),
+		FULL_JOIN:          []byte(" FULL JOIN EACH "),
+		RIGHT_JOIN:         []byte(" RIGHT JOIN EACH "),
+		LEFT_JOIN:          []byte(" LEFT JOIN EACH "),
+		NATURAL_JOIN:       []byte(" NATURAL JOIN EACH "),
+		NATURAL_LEFT_JOIN:  []byte(" NATURAL LEFT JOIN EACH "),
+		NATURAL_RIGHT_JOIN: []byte(" NATURAL RIGHT JOIN EACH "),
+		NATURAL_FULL_JOIN:  []byte(" NATURAL FULL JOIN EACH "),
+		CROSS_JOIN:         []byte(" CROSS JOIN EACH "),
 	}
 	default_escape_runes = map[rune][]byte{
 		'\'': []byte("''"),
@@ -544,17 +544,17 @@ func (me *DefaultAdapter) DatasetSql(buf *SqlBuilder, dataset Dataset) error {
 func (me *DefaultAdapter) QuoteIdentifier(buf *SqlBuilder, ident IdentifierExpression) error {
 	schema, table, col := ident.GetSchema(), ident.GetTable(), ident.GetCol()
 	if schema != empty_string {
-		buf.WriteRune(me.QuoteRune)
+		//buf.WriteRune(me.QuoteRune)
 		buf.WriteString(schema)
-		buf.WriteRune(me.QuoteRune)
+		//buf.WriteRune(me.QuoteRune)
 	}
 	if table != empty_string {
 		if schema != empty_string {
 			buf.WriteRune(period_rune)
 		}
-		buf.WriteRune(me.QuoteRune)
+		//buf.WriteRune(me.QuoteRune)
 		buf.WriteString(table)
-		buf.WriteRune(me.QuoteRune)
+		//buf.WriteRune(me.QuoteRune)
 	}
 	switch col.(type) {
 	case nil:
@@ -562,9 +562,9 @@ func (me *DefaultAdapter) QuoteIdentifier(buf *SqlBuilder, ident IdentifierExpre
 		if table != empty_string || schema != empty_string {
 			buf.WriteRune(period_rune)
 		}
-		buf.WriteRune(me.QuoteRune)
+		//buf.WriteRune(me.QuoteRune)
 		buf.WriteString(col.(string))
-		buf.WriteRune(me.QuoteRune)
+		//buf.WriteRune(me.QuoteRune)
 	case LiteralExpression:
 		if table != empty_string || schema != empty_string {
 			buf.WriteRune(period_rune)
